@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
-
+const {v4: uuidv4} = require('uuid');
 // ONLY Admins can be registered 
 const registerAdmin = asyncHandler(async (req, res) => {
     debugger;
@@ -18,13 +18,15 @@ const registerAdmin = asyncHandler(async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        role: 'admin'
+        role: 'admin',
+        userId: uuidv4()
     });
 
     res.status(201).json({
         _id: admin._id,
         email: admin.email,
-        role: admin.role
+        role: admin.role,
+       
     });
 });
 
